@@ -2,6 +2,8 @@ package com.ltp.gradesubmission.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ltp.gradesubmission.entity.Grade;
 import com.ltp.gradesubmission.entity.Student;
 import com.ltp.gradesubmission.repository.StudentRepository;
 
@@ -31,6 +33,7 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getStudents() {
         return (List<Student>)studentRepository.findAll();
     }
+
 
 
 }
