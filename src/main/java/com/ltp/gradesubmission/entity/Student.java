@@ -3,6 +3,7 @@ package com.ltp.gradesubmission.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Entity
-@Table(name="student")
+@Table(name = "student")
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -25,21 +26,19 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
     @NonNull
-    @Column(name="name",nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @NonNull
-    @Column(name="birth_date",nullable = false)
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Grade> grades;
-
-   
 
 }
