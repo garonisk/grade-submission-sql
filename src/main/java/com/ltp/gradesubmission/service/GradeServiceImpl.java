@@ -3,8 +3,11 @@ package com.ltp.gradesubmission.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
+import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Grade;
 import com.ltp.gradesubmission.entity.Student;
+import com.ltp.gradesubmission.repository.CourseRepository;
 import com.ltp.gradesubmission.repository.GradeRepository;
 import com.ltp.gradesubmission.repository.StudentRepository;
 
@@ -16,24 +19,28 @@ import lombok.AllArgsConstructor;
 public class GradeServiceImpl implements GradeService {
 
     GradeRepository gradeRepository;
-
     StudentRepository studentRepository;
+    CourseRepository courseRepository;
 
     @Override
     public Grade getGrade(Long studentId, Long courseId) {
-        return gradeRepository.findByStudentId(studentId);
+        return gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
     }
 
     @Override
     public Grade saveGrade(Grade grade, Long studentId, Long courseId) {
-        Student student = studentRepository.findById(courseId).get();
+        Student student = studentRepository.findById(studentId).get();
+        Course course = courseRepository.findById(courseId).get();
         grade.setStudent(student);
+        grade.setCourse(course);
         return gradeRepository.save(grade);
     }
 
     @Override
     public Grade updateGrade(String score, Long studentId, Long courseId) {
-        return null;
+        Grade grade = gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
+        grade.setScore(score);
+        return gradeRepository.save(grade);
     }
 
     @Override
